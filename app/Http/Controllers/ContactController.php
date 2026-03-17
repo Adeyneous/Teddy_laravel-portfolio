@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
 use App\Mail\NewContactMail;
 
 class ContactController extends Controller
@@ -16,10 +17,23 @@ class ContactController extends Controller
             'name'    => ['required', 'string', 'max:255', "regex:/^[A-Za-z0-9\s\-']+$/"],
             'email'   => ['required', 'email', 'max:255'],
             'message' => ['required', 'string', 'max:65535'],
-            'g-recaptcha-response' => ['nullable', 'string'],
+            'g-recaptcha-response' => ['required', 'string'],
         ]);
 
-        // 2) Save to database
+        // 2) Verify reCAPTCHA token with Google
+        $recaptchaToken = $request->input('g-recaptcha-response');
+        $response = Http::post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret'   => env('RECAPTCHA_SECRET_KEY'),
+            'response' => $recaptchaToken,
+        ]);
+
+        $recaptchaData = $response->json();
+
+        if (!$recaptchaData['success'] || $recaptchaData['score'] < 0.5) {
+            return back()->withErrors(['recaptcha' => 'reCAPTCHA verification failed. Please try again.']);
+        }
+
+        // 3) Save to database
         DB::table('contact_submissions')->insert([
             'name'       => $validated['name'],
             'email'      => $validated['email'],
@@ -29,15 +43,14 @@ class ContactController extends Controller
             'updated_at' => now(),
         ]);
 
-        // 3) Send email notification
+        // 4) Send email notification
         try {
             Mail::to('TeddyKpoto@gmail.com')->send(new NewContactMail($validated));
         } catch (\Exception $e) {
-            // Log the error but don't prevent the form from submitting
             \Log::error('Contact email failed: ' . $e->getMessage());
         }
 
-        // 4) Handle cookies for "remember me"
+        // 5) Handle cookies for "remember me"
         $redirect = redirect()->back()->with('message', 'Your message has been sent successfully!');
 
         if ($request->input('remember_me') === 'yes') {
