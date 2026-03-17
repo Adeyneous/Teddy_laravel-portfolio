@@ -81,6 +81,6 @@
 @endsection
 
 @section('scripts')
-<script src="https://www.google.com/recaptcha/enterprise.js?render=6LcPy90pAAAAAKW4gSPra-gSM4nYP3trZYLziDvm"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcPy90pAAAAAKW4gSPra-gSM4nYP3trZYLziDvm"></script>
 <script src="{{ asset('Scripts/Contact.js') }}"></script>
 @endsection
