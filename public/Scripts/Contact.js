@@ -15,7 +15,7 @@ function canSubmitForm() {
 
 // Execute reCAPTCHA on page load
 grecaptcha.ready(function() {
-  grecaptcha.execute('6LcPy90pAAAAAKW4gSPra-gSM4nYP3trZYLziDvm', {action: 'contact_page_load'})
+  grecaptcha.execute('6LdII44sAAAAAG7qHmOAQ_J_A-qoNloHdA0R6FjX', {action: 'contact_page_load'})
       .then(function(token) {
           console.log("Initial reCAPTCHA token:", token);
       })
