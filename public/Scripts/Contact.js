@@ -95,7 +95,7 @@ async function handleFormSubmit(event) {
           grecaptcha.ready(async () => {
               try {
                   const token = await grecaptcha.execute(
-                      '6LcPy90pAAAAAKW4gSPra-gSM4nYP3trZYLziDvm',
+                      '6LdII44sAAAAAG7qHmOAQ_J_A-qoNloHdA0R6FjX',
                       {action: 'contact_submit'}
                   );
                   document.getElementById('recaptchaResponse').value = token;
