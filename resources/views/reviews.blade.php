@@ -5,7 +5,7 @@
 @section('content')
 
 {{-- reCAPTCHA Enterprise --}}
-<script src="https://www.google.com/recaptcha/enterprise.js?render=6LcPy90pAAAAAKW4gSPra-gSM4nYP3trZYLziDvm"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdII44sAAAAAG7qHmOAQ_J_A-qoNloHdA0R6FjX"></script>
 
 <div class="content-wrapper">
     <div class="review-form-container">
@@ -100,8 +100,8 @@ document.getElementById('review-form').addEventListener('submit', function(e) {
         return;
     }
 
-    grecaptcha.enterprise.ready(() => {
-        grecaptcha.enterprise.execute('6LcPy90pAAAAAKW4gSPra-gSM4nYP3trZYLziDvm', {action: 'review_submit'})
+    grecaptcha.ready(() => {
+        grecaptcha.execute('6LdII44sAAAAAG7qHmOAQ_J_A-qoNloHdA0R6FjX', {action: 'review_submit'})
             .then(token => {
                 document.getElementById('recaptchaResponse').value = token;
                 this.submit();
@@ -117,8 +117,8 @@ function resetForm() {
 }
 
 function initializeRecaptcha() {
-    grecaptcha.enterprise.ready(function() {
-        grecaptcha.enterprise.execute('6LcPy90pAAAAAKW4gSPra-gSM4nYP3trZYLziDvm', {action: 'review_submit'})
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LdII44sAAAAAG7qHmOAQ_J_A-qoNloHdA0R6FjX', {action: 'review_submit'})
             .then(function(token) {
                 document.getElementById('recaptchaResponse').value = token;
             });
