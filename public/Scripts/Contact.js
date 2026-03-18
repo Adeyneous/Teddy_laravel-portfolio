@@ -89,33 +89,31 @@ async function handleFormSubmit(event) {
   submitButton.disabled = true;
   submitButton.textContent = 'Sending...';
 
-  try {
+ try {
       // Get reCAPTCHA token
-      await grecaptcha.enterprise.ready(async () => {
-          try {
-              const token = await grecaptcha.enterprise.execute(
-                  '6LcPy90pAAAAAKW4gSPra-gSM4nYP3trZYLziDvm', 
-                  {action: 'contact_submit'}
-              );
-              document.getElementById('recaptchaResponse').value = token;
+      await new Promise((resolve, reject) => {
+          grecaptcha.ready(async () => {
+              try {
+                  const token = await grecaptcha.execute(
+                      '6LcPy90pAAAAAKW4gSPra-gSM4nYP3trZYLziDvm',
+                      {action: 'contact_submit'}
+                  );
+                  document.getElementById('recaptchaResponse').value = token;
 
-              // Store submission time and submit form
-              storeSubmissionTime();
-              form.submit();
+                  // Store submission time and submit form
+                  storeSubmissionTime();
+                  resolve();
+                  form.submit();
 
-          } catch (error) {
-              console.error('reCAPTCHA execution failed:', error);
-              showErrors(['Verification failed. Please try again.']);
-              
-              // Reset button state
-              submitButton.disabled = false;
-              submitButton.textContent = originalButtonText;
-          }
+              } catch (error) {
+                  reject(error);
+              }
+          });
       });
   } catch (error) {
-      console.error('Form submission error:', error);
-      showErrors(['An error occurred. Please try again later.']);
-      
+      console.error('reCAPTCHA execution failed:', error);
+      showErrors(['Verification failed. Please try again.']);
+
       // Reset button state
       submitButton.disabled = false;
       submitButton.textContent = originalButtonText;
