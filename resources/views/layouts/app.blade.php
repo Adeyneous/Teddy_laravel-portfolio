@@ -41,7 +41,7 @@
                 });
             }
         });
-    </script>php artisan view:clear
+    </script>
 
     @yield('scripts')
 

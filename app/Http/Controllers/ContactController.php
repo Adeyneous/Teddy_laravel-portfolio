@@ -22,12 +22,15 @@ class ContactController extends Controller
 
         // 2) Verify reCAPTCHA token with Google
         $recaptchaToken = $request->input('g-recaptcha-response');
+        \Log::info('Token received: ' . $recaptchaToken);
         $response = Http::post('https://www.google.com/recaptcha/api/siteverify', [
             'secret'   => env('RECAPTCHA_SECRET_KEY'),
             'response' => $recaptchaToken,
         ]);
 
         $recaptchaData = $response->json();
+
+        \Log::info('reCAPTCHA response: ' . json_encode($recaptchaData));
 
         if (!$recaptchaData['success'] || $recaptchaData['score'] < 0.5) {
             return back()->withErrors(['recaptcha' => 'reCAPTCHA verification failed. Please try again.']);

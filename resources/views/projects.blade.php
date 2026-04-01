@@ -1,92 +1,179 @@
 @extends('layouts.app')
 
-@section('title', 'Projects')
+@section('title', 'Projects - Teddy Portfolio')
 
 @section('content')
 
 @php
-$projects_row1 = [
-  [
-    'image' => 'Neous.png',
-    'name' => 'Neous HM (Coming Soon)',
-    'description' => 'Developed using C# and built on the .NET framework, serves as a comprehensive tool designed to streamline hospital operations...',
-    'link' => 'https://github.com/Adeyneous/Neous-HM.git'
-  ],
-  [
-    'image' => 'IDapp.png',
-    'name' => 'ID Info',
-    'description' => 'Developed using JavaScript, provides a streamlined solution for scanning and processing user identification documents...',
-    'link' => 'https://github.com/Adeyneous/ID-info.git'
-  ],
-  [
-    'image' => 'ML3.png',
-    'name' => 'Home Credit',
-    'description' => 'Machine learning model designed to predict the likelihood of loan default among clients...',
-    'link' => 'https://www.kaggle.com/code/teddykpoto/home-credit-2/edit'
-  ],
-];
-
-$projects_row2 = [
-  [
-    'image' => 'loan_cal.png',
-    'name' => 'Home Credit Web',
-    'description' => 'Web application leveraging ML model to predict loan defaults...',
-    'link' => 'https://github.com/Adeyneous/Home-Credit.git'
-  ],
-  [
-    'image' => 'azure-data.png',
-    'name' => 'Azure Data',
-    'description' => 'End-to-end data solution moving SQL Server to Azure...',
-    'link' => 'https://github.com/Adeyneous/Azure-Data-.git'
-  ],
-  [
-    'image' => 'mob.png',
-    'name' => 'Diet Tracker',
-    'description' => 'Kotlin-based mobile app to track water intake and meals...',
-    'link' => 'https://github.com/Adeyneous/Diet-Tracker.git'
-  ],
+$projects = [
+    [
+        'image'       => 'Neous.png',
+        'name'        => 'Neous HM',
+        'badge'       => 'Coming Soon',
+        'description' => 'Developed using C# and built on the .NET framework, serves as a comprehensive tool designed to streamline hospital operations, managing patient records, scheduling, and departmental workflows.',
+        'tags'        => ['C#', '.NET', 'SQL Server'],
+        'category'    => 'web',
+        'github'      => 'https://github.com/Adeyneous/Neous-HM.git',
+        'demo'        => '',
+    ],
+    [
+        'image'       => 'IDapp.png',
+        'name'        => 'ID Info',
+        'badge'       => '',
+        'description' => 'Developed using JavaScript, provides a streamlined solution for scanning and processing user identification documents with real-time facial recognition and data extraction.',
+        'tags'        => ['JavaScript', 'OpenCV'],
+        'category'    => 'web',
+        'github'      => 'https://github.com/Adeyneous/ID-info.git',
+        'demo'        => '',
+    ],
+    [
+        'image'       => 'ML3.png',
+        'name'        => 'Home Credit',
+        'badge'       => '',
+        'description' => 'Machine learning model designed to predict the likelihood of loan default among clients using historical financial data and feature engineering techniques.',
+        'tags'        => ['Python', 'ML', 'Kaggle'],
+        'category'    => 'ml',
+        'github'      => '',
+        'demo'        => 'https://www.kaggle.com/code/teddykpoto/home-credit-2/edit',
+    ],
+    [
+        'image'       => 'loan_cal.png',
+        'name'        => 'Home Credit Web',
+        'badge'       => '',
+        'description' => 'Web application leveraging the ML model to predict loan defaults, providing a user-friendly interface for financial institutions to assess client risk in real time.',
+        'tags'        => ['Python', 'Flask', 'ML'],
+        'category'    => 'ml',
+        'github'      => 'https://github.com/Adeyneous/Home-Credit.git',
+        'demo'        => '',
+    ],
+    [
+        'image'       => 'azure-data.png',
+        'name'        => 'Azure Data',
+        'badge'       => '',
+        'description' => 'End-to-end data solution migrating an on-premise SQL Server database to Azure, implementing Data Factory pipelines, Synapse Analytics, and Power BI dashboards.',
+        'tags'        => ['Azure', 'SQL Server', 'Data Factory'],
+        'category'    => 'data',
+        'github'      => 'https://github.com/Adeyneous/Azure-Data-.git',
+        'demo'        => '',
+    ],
+    [
+        'image'       => 'mob.png',
+        'name'        => 'Diet Tracker',
+        'badge'       => '',
+        'description' => 'Kotlin-based mobile app to track daily water intake and meals, with nutritional breakdowns, progress charts, and reminder notifications.',
+        'tags'        => ['Kotlin', 'Android', 'SQLite'],
+        'category'    => 'mobile',
+        'github'      => 'https://github.com/Adeyneous/Diet-Tracker.git',
+        'demo'        => '',
+    ],
 ];
 @endphp
 
+<div class="proj-page">
 
-<div id="project-container">
+    {{-- ── Page header ── --}}
+    <div class="proj-header">
+        <h1 class="proj-title">Projects</h1>
+        <p class="proj-subtitle">A selection of work spanning web, mobile, data, and machine learning.</p>
+    </div>
 
-  <div class="Neous_med">
-    <h2>Projects</h2>
+    {{-- ── Filter tabs ── --}}
+    <div class="proj-filters" id="proj-filters">
+        <button class="proj-filter active" data-filter="all">All</button>
+        <button class="proj-filter" data-filter="web">Web</button>
+        <button class="proj-filter" data-filter="mobile">Mobile</button>
+        <button class="proj-filter" data-filter="data">Data</button>
+        <button class="proj-filter" data-filter="ml">ML</button>
+    </div>
 
-    <div class="card-container">
+    {{-- ── Project grid ── --}}
+    <div class="proj-grid" id="proj-grid">
 
-      {{-- First Row --}}
-      <div class="row">
-        @foreach ($projects_row1 as $project)
-          <div class="card">
-            <img src="{{ asset('Img/' . $project['image']) }}" alt="{{ $project['name'] }}">
-            <h3>{{ $project['name'] }}</h3>
-            <p>{{ $project['description'] }}</p>
-            <a href="{{ $project['link'] }}" class="project_button" target="_blank">
-              Project Code
-            </a>
-          </div>
+        @foreach($projects as $project)
+        <div class="proj-card" data-category="{{ $project['category'] }}">
+
+            {{-- Image --}}
+            <div class="proj-img-wrap">
+                <img src="{{ asset('Img/' . $project['image']) }}" alt="{{ $project['name'] }}">
+                @if($project['badge'])
+                    <span class="proj-badge">{{ $project['badge'] }}</span>
+                @endif
+            </div>
+
+            {{-- Body --}}
+            <div class="proj-body">
+                <h3 class="proj-name">{{ $project['name'] }}</h3>
+                <p class="proj-desc">{{ $project['description'] }}</p>
+
+                {{-- Tech tags --}}
+                <div class="proj-tags">
+                    @foreach($project['tags'] as $tag)
+                        <span class="proj-tag">{{ $tag }}</span>
+                    @endforeach
+                </div>
+
+                {{-- Links --}}
+                <div class="proj-links">
+                    @if($project['github'])
+                        <a href="{{ $project['github'] }}" target="_blank" class="proj-btn proj-btn-outline">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                    @endif
+                    @if($project['demo'])
+                        <a href="{{ $project['demo'] }}" target="_blank" class="proj-btn proj-btn-primary">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15 3 21 3 21 9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                            Live Demo
+                        </a>
+                    @endif
+                    @if(!$project['github'] && !$project['demo'])
+                        <span class="proj-btn proj-btn-disabled">Coming Soon</span>
+                    @endif
+                </div>
+            </div>
+
+        </div>
         @endforeach
-      </div>
-
-      {{-- Second Row --}}
-      <div class="row">
-        @foreach ($projects_row2 as $project)
-          <div class="card">
-            <img src="{{ asset('Img/' . $project['image']) }}" alt="{{ $project['name'] }}">
-            <h3>{{ $project['name'] }}</h3>
-            <p>{{ $project['description'] }}</p>
-            <a href="{{ $project['link'] }}" class="project_button" target="_blank">
-              Project Code
-            </a>
-          </div>
-        @endforeach
-      </div>
 
     </div>
-  </div>
+
+    {{-- Empty state (shown when filter has no matches) --}}
+    <div id="proj-empty" class="proj-empty" style="display:none">
+        <p>No projects in this category yet — check back soon.</p>
+    </div>
 
 </div>
 
+@endsection
+
+@section('scripts')
+<script>
+const filters = document.querySelectorAll('.proj-filter');
+const cards   = document.querySelectorAll('.proj-card');
+const empty   = document.getElementById('proj-empty');
+
+filters.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filters.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const cat = btn.dataset.filter;
+        let visible = 0;
+
+        cards.forEach(card => {
+            const show = cat === 'all' || card.dataset.category === cat;
+            card.style.display = show ? 'flex' : 'none';
+            if (show) visible++;
+        });
+
+        empty.style.display = visible === 0 ? 'block' : 'none';
+    });
+});
+</script>
 @endsection

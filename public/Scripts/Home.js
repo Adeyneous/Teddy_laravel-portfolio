@@ -1,115 +1,126 @@
-/* Home */
-
+/* ═══════════════════════════════════════════════════════
+   CODE BLOCK  – dot switching + auto-cycle (unchanged)
+   ═══════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', function () {
-  const formattedCodeText = document.getElementById('formatted-code-text');
-  const dots = document.querySelectorAll('.dot');
-  const formatData = document.querySelectorAll('#format-data > div');
-  let currentDot = 'red-dot';
+    const formattedCodeText = document.getElementById('formatted-code-text');
+    const dots              = document.querySelectorAll('.hm-dot');
+    const formatData        = document.querySelectorAll('#format-data > div');
+    const langLabel         = document.getElementById('hm-lang-label');
+    let currentDot          = 'red-dot';
 
-  function decodeHtmlEntities(value) {
-    return new DOMParser()
-      .parseFromString(value, "text/html")
-      .documentElement.textContent;
-  }
-
-  function setFormat(dotId) {
-    const node = document.querySelector(`#format-data > div[data-id='${dotId}']`);
-    if (!node) return;
-
-    const value = node.getAttribute('data-description') || '';
-    const decoded = decodeHtmlEntities(value);
-
-    if (formattedCodeText) {
-      formattedCodeText.textContent = decoded;
+    function decodeHtmlEntities(value) {
+        return new DOMParser()
+            .parseFromString(value, 'text/html')
+            .documentElement.textContent;
     }
-  }
 
-  // Initialize first snippet
-  setFormat(currentDot);
+    function setFormat(dotId) {
+        const node = document.querySelector(`#format-data > div[data-id='${dotId}']`);
+        if (!node) return;
 
-  dots.forEach(dot => {
-    dot.addEventListener('click', function () {
-      const dotId = this.getAttribute('data-id');
-      if (!dotId) return;
-      currentDot = dotId;
-      setFormat(dotId);
+        const decoded = decodeHtmlEntities(node.getAttribute('data-description') || '');
+        if (formattedCodeText) formattedCodeText.textContent = decoded;
+
+        // Update language label in the title bar
+        if (langLabel) langLabel.textContent = node.getAttribute('data-lang') || '';
+
+        // Highlight the active dot
+        dots.forEach(d => d.classList.remove('active'));
+        const activeDot = document.querySelector(`.hm-dot[data-id='${dotId}']`);
+        if (activeDot) activeDot.classList.add('active');
+    }
+
+    // Initialise with first snippet
+    setFormat(currentDot);
+
+    // Click to switch
+    dots.forEach(dot => {
+        dot.addEventListener('click', function () {
+            const dotId = this.getAttribute('data-id');
+            if (!dotId) return;
+            currentDot = dotId;
+            setFormat(dotId);
+        });
     });
-  });
 
-  // Auto cycle
-  if (formatData.length > 0) {
-    setInterval(() => {
-      const dotKeys = Array.from(formatData).map(div => div.getAttribute('data-id'));
-      let index = dotKeys.indexOf(currentDot);
-      index = (index + 1) % dotKeys.length;
-      currentDot = dotKeys[index];
-      setFormat(currentDot);
-    }, 5000);
-  }
+    // Auto-cycle every 5 seconds
+    if (formatData.length > 0) {
+        setInterval(() => {
+            const keys  = Array.from(formatData).map(d => d.getAttribute('data-id'));
+            const index = (keys.indexOf(currentDot) + 1) % keys.length;
+            currentDot  = keys[index];
+            setFormat(currentDot);
+        }, 5000);
+    }
 });
 
 
-/* Welcome Message */
-
+/* ═══════════════════════════════════════════════════════
+   TYPING ANIMATION  (unchanged)
+   ═══════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', function () {
-  const phrases = ["Frontend Development", "Backend Development", "Mobile App Development", "Machine Learning"];
-  let currentPhrase = 0;
-  let currentCharacter = 0;
-  let deleting = false;
+    const phrases   = ['Frontend Development', 'Backend Development', 'Mobile App Development', 'Machine Learning'];
+    let phraseIndex = 0;
+    let charIndex   = 0;
+    let deleting    = false;
 
-  const dynamicText = document.getElementById('dynamic-text');
-  if (!dynamicText) return;
+    const dynamicText = document.getElementById('dynamic-text');
+    if (!dynamicText) return;
 
-  function type() {
-    const wait = 200 + Math.random() * 100;
+    function type() {
+        const full = phrases[phraseIndex];
+        deleting ? charIndex-- : charIndex++;
+        dynamicText.textContent = full.substring(0, charIndex);
 
-    const full = phrases[currentPhrase];
+        if (!deleting && charIndex === full.length) {
+            setTimeout(() => { deleting = true; type(); }, 1200);
+            return;
+        }
+        if (deleting && charIndex <= 0) {
+            deleting     = false;
+            phraseIndex  = (phraseIndex + 1) % phrases.length;
+        }
 
-    if (deleting) {
-      currentCharacter--;
-    } else {
-      currentCharacter++;
+        setTimeout(type, deleting ? 100 : 200 + Math.random() * 100);
     }
 
-    dynamicText.textContent = full.substring(0, currentCharacter);
-
-    if (!deleting && currentCharacter === full.length) {
-      setTimeout(() => {
-        deleting = true;
-        type();
-      }, 1200);
-      return;
-    }
-
-    if (deleting && currentCharacter <= 0) {
-      deleting = false;
-      currentPhrase = (currentPhrase + 1) % phrases.length;
-    }
-
-    setTimeout(type, deleting ? 100 : wait);
-  }
-
-  setTimeout(type, 500);
+    setTimeout(type, 500);
 });
 
 
-/* Buttons */
+/* ═══════════════════════════════════════════════════════
+   GITHUB STAT CHIPS  (new — fetches repo + follower count)
+   ═══════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', async function () {
+    try {
+        const res  = await fetch('https://api.github.com/users/Adeyneous');
+        const data = await res.json();
+        const reposEl     = document.getElementById('hm-repos');
+        const followersEl = document.getElementById('hm-followers');
+        if (reposEl)     reposEl.textContent     = data.public_repos ?? '–';
+        if (followersEl) followersEl.textContent = data.followers    ?? '–';
+    } catch (e) {
+        console.warn('GitHub stat fetch failed:', e);
+    }
+});
 
-// Blade passes URL into this function: redirectToContact("http://127.0.0.1:8000/contact")
+
+/* ═══════════════════════════════════════════════════════
+   CONTACT REDIRECT  (unchanged)
+   ═══════════════════════════════════════════════════════ */
 function redirectToContact(url) {
-  window.location.href = url;
+    window.location.href = url;
 }
 
 
-/* Particles.js (optional, safe) */
-
+/* ═══════════════════════════════════════════════════════
+   PARTICLES.JS  (unchanged — safe no-op if not loaded)
+   ═══════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', function () {
-  if (typeof particlesJS !== "undefined") {
-    // Make sure you actually have /public/particles.json if you use this.
-    particlesJS.load('particles-js', '/particles.json', function () {
-      console.log('particles.js loaded');
-    });
-  }
+    if (typeof particlesJS !== 'undefined') {
+        particlesJS.load('particles-js', '/particles.json', function () {
+            console.log('particles.js loaded');
+        });
+    }
 });
-
 
