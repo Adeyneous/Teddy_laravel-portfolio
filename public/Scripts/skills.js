@@ -2,7 +2,7 @@
 //  CONFIG  ← update AWS_AI_ENDPOINT after AWS setup
 // ═══════════════════════════════════════════════════════
 const GITHUB_USERNAME = 'Adeyneous';
-const AWS_AI_ENDPOINT = 'YOUR_API_GATEWAY_URL';
+const AWS_AI_ENDPOINT = 'https://hsbozixbud.execute-api.us-east-1.amazonaws.com/prod/generate';
 
 // ═══════════════════════════════════════════════════════
 //  COUNT-UP ANIMATION  (kept from original skills.js)
