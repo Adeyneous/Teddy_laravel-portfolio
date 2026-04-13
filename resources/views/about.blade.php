@@ -39,8 +39,8 @@
             </p>
 
             <div class="about-facts">
-                <div class="about-fact-chip">📍 <strong>Minneapolis, MN</strong></div>
-                <div class="about-fact-chip">🎓 <strong>Metro State University</strong></div>
+                <div class="about-fact-chip">📍 <strong>South Bend, IN</strong></div>
+                <div class="about-fact-chip">🎓 <strong>Indiana University</strong></div>
                 <div class="about-fact-chip">💼 <strong>2+ yrs experience</strong></div>
                 <div class="about-fact-chip">☁️ <strong>AWS · Azure</strong></div>
             </div>
@@ -57,6 +57,11 @@
             <div class="about-edu-card">
                 <div class="about-edu-year">2022 – Present</div>
                 <div class="about-edu-degree">B.S. Computer Science</div>
+                <div class="about-edu-school">Indiana University</div>
+            </div>
+            <div class="about-edu-card">
+                <div class="about-edu-year">2022 – 2025</div>
+                <div class="about-edu-degree">B.S. Computer Science</div>
                 <div class="about-edu-school">Metro State University</div>
             </div>
             <div class="about-edu-card">
@@ -67,7 +72,7 @@
             <div class="about-edu-card">
                 <div class="about-edu-year">Ongoing</div>
                 <div class="about-edu-degree">Self-Directed Learning</div>
-                <div class="about-edu-school">React · Node.js · TypeScript · PHP</div>
+                <div class="about-edu-school">Machine Learning · Firmware Engineering · PHP · MIPS Assembly · ARM Assembly · Networking</div>
             </div>
         </div>
     </div>

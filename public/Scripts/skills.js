@@ -77,7 +77,7 @@ async function loadGitHub() {
 }
 
 function buildLanguageChart(repos) {
-    const counts = {};
+    const counts = {};    
     repos.forEach(r => { if (r.language) counts[r.language] = (counts[r.language] || 0) + 1; });
     const total  = Object.values(counts).reduce((a, b) => a + b, 0);
     const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 6);
