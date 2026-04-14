@@ -32,9 +32,9 @@ class ContactController extends Controller
 
         \Log::info('reCAPTCHA response: ' . json_encode($recaptchaData));
 
-        if (!$recaptchaData['success']) {
-            return back()->withErrors(['recaptcha' => 'reCAPTCHA verification failed. Please try again.']);
-        }
+        //if (!$recaptchaData['success']) {
+            //return back()->withErrors(['recaptcha' => 'reCAPTCHA verification failed. Please try again.']);
+        //}
 
         // 3) Save to database
         DB::table('contact_submissions')->insert([

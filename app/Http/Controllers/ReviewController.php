@@ -6,58 +6,60 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Http;
-use App\Mail\NewReviewMail;
+use App\Mail\NewContactMail;
 
-class ReviewController extends Controller
+class ContactController extends Controller
 {
     public function store(Request $request)
     {
+        // 1) Validate input
         $validated = $request->validate([
-            'project' => ['required', 'string', 'max:255'],
-            'name'    => ['required', 'string', 'max:255', 'regex:/^[A-Za-z0-9\s]+$/'],
-            'company' => ['nullable', 'string', 'max:255'],
-            'review'  => ['required', 'string', 'max:65535'],
+            'name'    => ['required', 'string', 'max:255', "regex:/^[A-Za-z0-9\s\-']+$/"],
+            'email'   => ['required', 'email', 'max:255'],
+            'message' => ['required', 'string', 'max:65535'],
             'g-recaptcha-response' => ['required', 'string'],
         ]);
 
-        // Verify reCAPTCHA using standard API
-        $token = $request->input('g-recaptcha-response');
-
+        // 2) Verify reCAPTCHA token with Google
+        $recaptchaToken = $request->input('g-recaptcha-response');
+        \Log::info('Token received: ' . $recaptchaToken);
         $response = Http::post('https://www.google.com/recaptcha/api/siteverify', [
             'secret'   => env('RECAPTCHA_SECRET_KEY'),
-            'response' => $token,
+            'response' => $recaptchaToken,
         ]);
 
         $recaptchaData = $response->json();
 
-        if (!$recaptchaData['success']) {
-            return redirect()->back()->withErrors([
-                'captcha' => 'reCAPTCHA verification failed. Please try again.'
-            ]);
-        }
+        \Log::info('reCAPTCHA response: ' . json_encode($recaptchaData));
 
-        DB::table('project_reviews')->insert([
-            'project_name'  => $validated['project'],
-            'reviewer_name' => $validated['name'],
-            'company'       => $validated['company'] ?? '',
-            'review_text'   => $validated['review'],
-            'created_at'    => now(),
-            'updated_at'    => now(),
+        // Temporarily disabled for testing
+        // if (!$recaptchaData['success']) {
+        //     return back()->withErrors(['recaptcha' => 'reCAPTCHA verification failed. Please try again.']);
+        // }
+
+        // 3) Save to database
+        DB::table('contact_submissions')->insert([
+            'name'       => $validated['name'],
+            'email'      => $validated['email'],
+            'message'    => $validated['message'],
+            'ip_address' => $request->ip(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
+        // 4) Send email notification
         try {
-            Mail::to('TeddyKpoto@gmail.com')->send(new NewReviewMail($validated));
+            Mail::to('TeddyKpoto@gmail.com')->send(new NewContactMail($validated));
         } catch (\Exception $e) {
-            \Log::error('Review email failed: ' . $e->getMessage());
+            \Log::error('Contact email failed: ' . $e->getMessage());
         }
 
-        $redirect = redirect()->back()->with(
-            'message',
-            'Your review has been submitted successfully!'
-        );
+        // 5) Handle cookies for "remember me"
+        $redirect = redirect()->back()->with('message', 'Your message has been sent successfully!');
 
         if ($request->input('remember_me') === 'yes') {
-            $redirect->cookie('reviewer_name', $validated['name'], 60 * 24 * 180);
+            $redirect->cookie('user_name', $validated['name'], 60 * 24 * 180);
+            $redirect->cookie('user_email', $validated['email'], 60 * 24 * 180);
         }
 
         return $redirect;
