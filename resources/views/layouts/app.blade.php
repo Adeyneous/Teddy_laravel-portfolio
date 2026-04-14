@@ -40,6 +40,8 @@
         });
     </script>
 
+    <script src="{{ asset('Scripts/nav.js') }}"></script>
+
     @yield('scripts')
 
 </body>
