@@ -30,7 +30,7 @@ class ReviewController extends Controller
 
         $recaptchaData = $response->json();
 
-        if (!$recaptchaData['success'] || $recaptchaData['score'] < 0.5) {
+        if (!$recaptchaData['success']) {
             return redirect()->back()->withErrors([
                 'captcha' => 'reCAPTCHA verification failed. Please try again.'
             ]);

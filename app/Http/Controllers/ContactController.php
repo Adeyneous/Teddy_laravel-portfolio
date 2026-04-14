@@ -32,7 +32,7 @@ class ContactController extends Controller
 
         \Log::info('reCAPTCHA response: ' . json_encode($recaptchaData));
 
-        if (!$recaptchaData['success'] || $recaptchaData['score'] < 0.5) {
+        if (!$recaptchaData['success']) {
             return back()->withErrors(['recaptcha' => 'reCAPTCHA verification failed. Please try again.']);
         }
 
