@@ -3,10 +3,6 @@
 @section('title', 'Project Review')
 
 @section('content')
-
-{{-- reCAPTCHA Enterprise --}}
-<script src="https://www.google.com/recaptcha/api.js?render=6LdII44sAAAAAG7qHmOAQ_J_A-qoNloHdA0R6FjX"></script>
-
 <div class="content-wrapper">
     <div class="review-form-container">
 
@@ -23,9 +19,7 @@
         @endif
 
         <form id="review-form" action="{{ route('reviews.submit') }}" method="POST" class="review-form">
-    @csrf
-
-
+            @csrf
 
             <h1>Project Review</h1>
             <p>Please share your experience with one of my projects. Your feedback is valuable!</p>
@@ -71,7 +65,8 @@
                 <label for="remember_me">Remember my name for next time</label>
             </div>
 
-            <input type="hidden" name="g-recaptcha-response" id="recaptchaResponse">
+            {{-- reCAPTCHA v2 widget --}}
+            <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
 
             <div class="form-buttons">
                 <button type="button" onclick="resetForm()" class="cancel-button">Cancel</button>
@@ -81,6 +76,7 @@
     </div>
 </div>
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
 document.getElementById('review-form').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -100,32 +96,14 @@ document.getElementById('review-form').addEventListener('submit', function(e) {
         return;
     }
 
-    grecaptcha.ready(() => {
-        grecaptcha.execute('6LdII44sAAAAAG7qHmOAQ_J_A-qoNloHdA0R6FjX', {action: 'review_submit'})
-            .then(token => {
-                document.getElementById('recaptchaResponse').value = token;
-                this.submit();
-            });
-    });
+    this.submit();
 });
 
 function resetForm() {
     if (confirm('Are you sure you want to clear the form?')) {
         document.getElementById('review-form').reset();
-        initializeRecaptcha();
     }
 }
-
-function initializeRecaptcha() {
-    grecaptcha.ready(function() {
-        grecaptcha.execute('6LdII44sAAAAAG7qHmOAQ_J_A-qoNloHdA0R6FjX', {action: 'review_submit'})
-            .then(function(token) {
-                document.getElementById('recaptchaResponse').value = token;
-            });
-    });
-}
-
-initializeRecaptcha();
 </script>
 
 @endsection

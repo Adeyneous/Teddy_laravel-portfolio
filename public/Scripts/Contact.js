@@ -13,17 +13,6 @@ function canSubmitForm() {
   return timeSinceLastSubmission >= hourInMs;
 }
 
-// Execute reCAPTCHA on page load
-grecaptcha.ready(function() {
-  grecaptcha.execute('6LdII44sAAAAAG7qHmOAQ_J_A-qoNloHdA0R6FjX', {action: 'contact_page_load'})
-      .then(function(token) {
-          console.log("Initial reCAPTCHA token:", token);
-      })
-      .catch(function(error) {
-          console.error('Initial reCAPTCHA failed:', error);
-      });
-});
-
 // Form validation
 function validateForm(form) {
   const name = form.querySelector('#name').value.trim();
@@ -65,7 +54,7 @@ function showErrors(errors) {
 }
 
 // Handle form submission
-async function handleFormSubmit(event) {
+function handleFormSubmit(event) {
   event.preventDefault();
   
   const form = event.target;
@@ -85,39 +74,12 @@ async function handleFormSubmit(event) {
 
   // Show loading state
   const submitButton = form.querySelector('button[type="submit"]');
-  const originalButtonText = submitButton.textContent;
   submitButton.disabled = true;
   submitButton.textContent = 'Sending...';
 
- try {
-      // Get reCAPTCHA token
-      await new Promise((resolve, reject) => {
-          grecaptcha.ready(async () => {
-              try {
-                  const token = await grecaptcha.execute(
-                      '6LdII44sAAAAAG7qHmOAQ_J_A-qoNloHdA0R6FjX',
-                      {action: 'contact_submit'}
-                  );
-                  document.getElementById('recaptchaResponse').value = token;
-
-                  // Store submission time and submit form
-                  storeSubmissionTime();
-                  resolve();
-                  form.submit();
-
-              } catch (error) {
-                  reject(error);
-              }
-          });
-      });
-  } catch (error) {
-      console.error('reCAPTCHA execution failed:', error);
-      showErrors(['Verification failed. Please try again.']);
-
-      // Reset button state
-      submitButton.disabled = false;
-      submitButton.textContent = originalButtonText;
-  }
+  // Store submission time and submit form
+  storeSubmissionTime();
+  form.submit();
 }
 
 // Remember email functionality
@@ -156,6 +118,3 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 });
-
-
-

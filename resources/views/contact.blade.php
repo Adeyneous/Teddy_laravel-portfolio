@@ -65,8 +65,8 @@
                 <label for="remember_me">Remember my information for next time</label>
             </div>
 
-            {{-- reCAPTCHA hidden field --}}
-            <input type="hidden" name="g-recaptcha-response" id="recaptchaResponse">
+            {{-- reCAPTCHA v2 widget --}}
+            <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
 
             <button type="submit" class="submit-btn">Submit</button>
         </form>
@@ -81,6 +81,6 @@
 @endsection
 
 @section('scripts')
-<script src="https://www.google.com/recaptcha/api.js?render=6LdII44sAAAAAG7qHmOAQ_J_A-qoNloHdA0R6FjX"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="{{ asset('Scripts/Contact.js') }}"></script>
 @endsection
