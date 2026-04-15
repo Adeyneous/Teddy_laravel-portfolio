@@ -1,36 +1,39 @@
 @extends('layouts.app')
 
-@section('title', 'Contact - Teddy Portfolio')
+@section('title', 'Project Review')
 
 @section('content')
 <div class="content-wrapper">
-    <div class="contact-container">
+    <div class="review-form-container">
 
         {{-- Success message --}}
         @if(session('message'))
-            <div class="success-message">
-                {{ session('message') }}
-            </div>
+            <div class="success-message">{{ session('message') }}</div>
         @endif
 
-        {{-- Validation Errors --}}
-        @if ($errors->any())
-            <div class="error-message">
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-            </div>
+        {{-- Errors --}}
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                <div class="error-message">{{ $error }}</div>
+            @endforeach
         @endif
 
-        <form id="contact-form"
-              action="{{ route('contact.submit') }}"
-              method="POST"
-              class="contact-form">
-
+        <form id="review-form" action="{{ route('reviews.submit') }}" method="POST" class="review-form">
             @csrf
 
-            <h1>CONTACT ME</h1>
-            <p>If you have any questions or concerns, please don't hesitate to contact me. I am open to any work opportunities that align with my skills and interests.</p>
+            <h1>Project Review</h1>
+            <p>Please share your experience with one of my projects. Your feedback is valuable!</p>
+
+            <label for="project-select">Choose a project to review:</label>
+            <select id="project-select" name="project" required>
+                <option value="">--Please choose an option--</option>
+                <option value="Neous HM" {{ old('project')=='Neous HM' ? 'selected' : '' }}>Neous HM</option>
+                <option value="ID Info" {{ old('project')=='ID Info' ? 'selected' : '' }}>ID info</option>
+                <option value="Home Credit" {{ old('project')=='Home Credit' ? 'selected' : '' }}>Home Credit</option>
+                <option value="Home Credit Web" {{ old('project')=='Home Credit Web' ? 'selected' : '' }}>Home Credit Web app</option>
+                <option value="Azure Data" {{ old('project')=='Azure Data' ? 'selected' : '' }}>Azure Data</option>
+                <option value="Diet Tracker" {{ old('project')=='Diet Tracker' ? 'selected' : '' }}>Diet Tracker</option>
+            </select>
 
             <label for="name">Your Name:</label>
             <input type="text"
@@ -40,46 +43,72 @@
                    maxlength="255"
                    pattern="[A-Za-z0-9\s\-']+"
                    title="Please enter a valid name"
-                   value="{{ old('name', request()->cookie('user_name') ?? '') }}">
+                   placeholder="Enter your name"
+                   value="{{ old('name', request()->cookie('reviewer_name')) }}">
 
-            <label for="email">Your Email:</label>
-            <input type="email"
-                   id="email"
-                   name="email"
-                   required
-                   maxlength="255"
-                   value="{{ old('email', request()->cookie('user_email') ?? '') }}">
+            <label for="company">Company:</label>
+            <input type="text"
+                   id="company"
+                   name="company"
+                   placeholder="Enter your company"
+                   value="{{ old('company') }}">
 
-            <label for="message">Your Message:</label>
-            <textarea id="message"
-                      name="message"
+            <label for="review">Review:</label>
+            <textarea id="review"
+                      name="review"
                       required
-                      maxlength="65535"
-                      rows="5">{{ old('message') }}</textarea>
+                      placeholder="Write your review here..."
+                      rows="4">{{ old('review') }}</textarea>
 
             <div class="remember-me">
-                <input type="checkbox"
-                       id="remember_me"
-                       name="remember_me"
-                       value="yes">
-                <label for="remember_me">Remember my information for next time</label>
+                <input type="checkbox" id="remember_me" name="remember_me" value="yes" {{ old('remember_me') ? 'checked' : '' }}>
+                <label for="remember_me">Remember my name for next time</label>
             </div>
 
             {{-- reCAPTCHA v2 widget --}}
-            <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+            <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.sitekey') }}"></div>
 
-            <button type="submit" class="submit-btn">Submit</button>
+            <div class="form-buttons">
+                <button type="button" onclick="resetForm()" class="cancel-button">Cancel</button>
+                <button type="submit" class="submit-button">Submit Review</button>
+            </div>
         </form>
-
-        <div class="contact-info">
-            <p><img src="{{ asset('Img/linkedin.svg') }}" alt="LinkedIn" class="icon"> <a href="https://www.linkedin.com/in/adeyneous-kpoto-84021a199/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">LinkedIn</a></p>
-            <p><img src="{{ asset('Img/discord.svg') }}" alt="Discord" class="icon"> <a href="https://discord.gg/643a7TJU" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Discord</a></p>
-        </div>
     </div>
 </div>
-@endsection
 
-@section('scripts')
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script src="{{ asset('Scripts/Contact.js') }}"></script>
+<script>
+document.getElementById('review-form').addEventListener('submit', function(e) {
+    const project = document.getElementById('project-select').value.trim();
+    const name = document.getElementById('name').value.trim();
+    const review = document.getElementById('review').value.trim();
+
+    if (!project || !name || !review) {
+        e.preventDefault();
+        alert('Please fill in all required fields');
+        return;
+    }
+
+    const nameRegex = /^[A-Za-z0-9\s\-']+$/;
+    if (!nameRegex.test(name)) {
+        e.preventDefault();
+        alert('Please enter a valid name');
+        return;
+    }
+
+    if (grecaptcha.getResponse() === '') {
+        e.preventDefault();
+        alert('Please complete the reCAPTCHA.');
+        return;
+    }
+});
+
+function resetForm() {
+    if (confirm('Are you sure you want to clear the form?')) {
+        document.getElementById('review-form').reset();
+        grecaptcha.reset();
+    }
+}
+</script>
+
 @endsection

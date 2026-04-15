@@ -66,7 +66,7 @@
             </div>
 
             {{-- reCAPTCHA v2 widget --}}
-            <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+            <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.sitekey') }}"></div>
 
             <div class="form-buttons">
                 <button type="button" onclick="resetForm()" class="cancel-button">Cancel</button>
@@ -79,29 +79,34 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
 document.getElementById('review-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-
     const project = document.getElementById('project-select').value.trim();
     const name = document.getElementById('name').value.trim();
     const review = document.getElementById('review').value.trim();
 
     if (!project || !name || !review) {
+        e.preventDefault();
         alert('Please fill in all required fields');
         return;
     }
 
     const nameRegex = /^[A-Za-z0-9\s\-']+$/;
     if (!nameRegex.test(name)) {
+        e.preventDefault();
         alert('Please enter a valid name');
         return;
     }
 
-    this.submit();
+    if (grecaptcha.getResponse() === '') {
+        e.preventDefault();
+        alert('Please complete the reCAPTCHA.');
+        return;
+    }
 });
 
 function resetForm() {
     if (confirm('Are you sure you want to clear the form?')) {
         document.getElementById('review-form').reset();
+        grecaptcha.reset();
     }
 }
 </script>
