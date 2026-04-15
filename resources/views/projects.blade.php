@@ -19,7 +19,7 @@ $projects = [
     [
         'image'       => 'IDapp.png',
         'name'        => 'ID Info',
-        'badge'       => '',
+        'badge'       => 'Coming Soon',
         'description' => 'Developed using JavaScript, provides a streamlined solution for scanning and processing user identification documents with real-time facial recognition and data extraction.',
         'tags'        => ['JavaScript', 'OpenCV'],
         'category'    => 'web',
@@ -29,7 +29,7 @@ $projects = [
     [
         'image'       => 'ML3.png',
         'name'        => 'Home Credit',
-        'badge'       => '',
+       'badge'       => 'Coming Soon',
         'description' => 'Machine learning model designed to predict the likelihood of loan default among clients using historical financial data and feature engineering techniques.',
         'tags'        => ['Python', 'ML', 'Kaggle'],
         'category'    => 'ml',
@@ -39,7 +39,7 @@ $projects = [
     [
         'image'       => 'loan_cal.png',
         'name'        => 'Home Credit Web',
-        'badge'       => '',
+        'badge'       => 'Coming Soon',
         'description' => 'Web application leveraging the ML model to predict loan defaults, providing a user-friendly interface for financial institutions to assess client risk in real time.',
         'tags'        => ['Python', 'Flask', 'ML'],
         'category'    => 'ml',
@@ -49,7 +49,7 @@ $projects = [
     [
         'image'       => 'azure-data.png',
         'name'        => 'Azure Data',
-        'badge'       => '',
+        'badge'       => 'Coming Soon',
         'description' => 'End-to-end data solution migrating an on-premise SQL Server database to Azure, implementing Data Factory pipelines, Synapse Analytics, and Power BI dashboards.',
         'tags'        => ['Azure', 'SQL Server', 'Data Factory'],
         'category'    => 'data',
@@ -59,7 +59,7 @@ $projects = [
     [
         'image'       => 'mob.png',
         'name'        => 'Diet Tracker',
-        'badge'       => '',
+        'badge'       => 'Coming Soon',
         'description' => 'Kotlin-based mobile app to track daily water intake and meals, with nutritional breakdowns, progress charts, and reminder notifications.',
         'tags'        => ['Kotlin', 'Android', 'SQLite'],
         'category'    => 'mobile',

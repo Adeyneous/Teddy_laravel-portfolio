@@ -24,17 +24,16 @@ class ReviewController extends Controller
         $token = $request->input('g-recaptcha-response');
 
         $response = Http::post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret'   => env('RECAPTCHA_SECRET_KEY'),
+            'secret'   => config('services.recaptcha.secret'),
             'response' => $token,
+            'remoteip' => $request->ip(),
         ]);
 
         $recaptchaData = $response->json();
 
-        //if (!$recaptchaData['success']) {
-            //return redirect()->back()->withErrors([
-                //'captcha' => 'reCAPTCHA verification failed. Please try again.'
-            //]);
-       // }
+        if (!$recaptchaData['success']) {
+            return redirect()->withErrors(['captcha' => 'reCAPTCHA verification failed. Please try again.']);
+        }
 
         DB::table('project_reviews')->insert([
             'project_name'  => $validated['project'],
@@ -57,7 +56,7 @@ class ReviewController extends Controller
         );
 
         if ($request->input('remember_me') === 'yes') {
-            $redirect->cookie('reviewer_name', $validated['name'], 60 * 24 * 180);
+            return $redirect->cookie('reviewer_name', $validated['name'], 60 * 24 * 180);
         }
 
         return $redirect;

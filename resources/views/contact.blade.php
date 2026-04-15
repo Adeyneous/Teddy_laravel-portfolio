@@ -72,9 +72,8 @@
         </form>
 
         <div class="contact-info">
-            <p><img src="{{ asset('Img/email.svg') }}" alt="Email" class="icon"> TeddyKpoto@gmail.com</p>
-            <p><img src="{{ asset('Img/phone.svg') }}" alt="Phone" class="icon"> 763-291-7935</p>
-            <p><img src="{{ asset('Img/location.svg') }}" alt="Address" class="icon"> 7244 York Ave S, Edina, MN, 55435</p>
+            <p><img src="{{ asset('Img/linkedin.svg') }}" alt="LinkedIn" class="icon"> <a href="https://www.linkedin.com/in/adeyneous-kpoto-84021a199/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">LinkedIn</a></p>
+            <p><img src="{{ asset('Img/discord.svg') }}" alt="Discord" class="icon"> <a href="https://discord.gg/643a7TJU" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Discord</a></p>
         </div>
     </div>
 </div>

@@ -24,19 +24,20 @@ class ContactController extends Controller
         $recaptchaToken = $request->input('g-recaptcha-response');
         \Log::info('Token received: ' . $recaptchaToken);
         $response = Http::post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret'   => env('RECAPTCHA_SECRET_KEY'),
+            'secret'   => config('services.recaptcha.secret'),
             'response' => $recaptchaToken,
+            'remoteip' => $request->ip(),
         ]);
 
         $recaptchaData = $response->json();
 
         \Log::info('reCAPTCHA response: ' . json_encode($recaptchaData));
 
-        //if (!$recaptchaData['success']) {
-            //return back()->withErrors(['recaptcha' => 'reCAPTCHA verification failed. Please try again.']);
-        //}
+        if (!$recaptchaData['success']) {
+            return back()->withErrors(['recaptcha' => 'reCAPTCHA verification failed. Please try again.']);
+        }
 
-        // 3) Save to database
+         // 3) Save to database
         DB::table('contact_submissions')->insert([
             'name'       => $validated['name'],
             'email'      => $validated['email'],
@@ -57,8 +58,9 @@ class ContactController extends Controller
         $redirect = redirect()->back()->with('message', 'Your message has been sent successfully!');
 
         if ($request->input('remember_me') === 'yes') {
-            $redirect->cookie('user_name', $validated['name'], 60 * 24 * 180);
-            $redirect->cookie('user_email', $validated['email'], 60 * 24 * 180);
+            return $redirect
+                ->cookie('user_name', $validated['name'], 60 * 24 * 180)
+                ->cookie('user_email', $validated['email'], 60 * 24 * 180);
         }
 
         return $redirect;
