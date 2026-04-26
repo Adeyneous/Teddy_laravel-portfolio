@@ -1336,70 +1336,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* Hamburger menu button (hidden by default) */
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.8rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  margin: 0;
-}
 
-/* Mobile nav improvements */
-@media (max-width: 768px) {
-  header {
-    flex-wrap: wrap;
-    position: relative;
-  }
-
-  .nav-toggle {
-    display: block;
-    order: 2;
-  }
-
-  nav {
-    order: 3;
-    width: 100%;
-    display: none;
-  }
-
- 
-
-  nav ul {
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;
-  }
-
-  nav ul li {
-    margin: 0.5rem 0;
-  }
-
-  /* Home page */
-  .welcome-message span[style*="4.5rem"] {
-    font-size: 2.5rem !important;
-  }
-
-  .welcome-message span[style*="2rem"] {
-    font-size: 1.3rem !important;
-  }
-
-  /* Contact page */
-  .content-wrapper {
-    height: auto;
-    min-height: 100vh;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .contact-container {
-    width: 90%;
-    margin: 10px auto;
-  }
-}
 
 @media (max-width: 480px) {
   .welcome-message span[style*="4.5rem"] {
@@ -1774,11 +1711,11 @@ body.skills-page footer { display:none; }
 @media (max-width:480px)  { .sk-tech-grid { grid-template-columns:repeat(3,1fr); } .sk-stat-row { gap:.8rem; } }
 
 /* ============================================================
-   NAV TOGGLE (Hamburger Menu)
+   NAV TOGGLE (Hamburger Menu) — single source of truth
    ============================================================ */
 
 .nav-toggle {
-  display: none;
+  display: none;                /* hidden on desktop */
   background: #a020f0;
   border: none;
   border-radius: 0.4rem;
@@ -1790,11 +1727,18 @@ body.skills-page footer { display:none; }
   order: 3;
 }
 
+/* Mobile: show toggle, hide nav until .open */
 @media (max-width: 768px) {
+  header {
+    flex-wrap: wrap;
+    position: relative;
+  }
+
   .nav-toggle {
     display: block;
   }
 
+  /* Use #main-nav (ID) consistently — same selector the JS targets */
   #main-nav {
     display: none;
     width: 100%;
@@ -1805,12 +1749,9 @@ body.skills-page footer { display:none; }
     display: block;
   }
 
-  header {
-    flex-wrap: wrap;
-  }
-
-  nav ul {
+  #main-nav ul {
     flex-direction: column;
+    align-items: stretch;
     background: #0f172a;
     border: 1px solid #1f2d45;
     border-radius: 0.5rem;
@@ -1818,12 +1759,12 @@ body.skills-page footer { display:none; }
     margin-top: 0.5rem;
   }
 
-  nav ul li {
+  #main-nav ul li {
     margin: 0;
     padding: 0.5rem 1rem;
   }
 
-  nav ul li a {
+  #main-nav ul li a {
     display: block;
     font-size: 1rem;
   }
