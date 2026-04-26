@@ -1366,9 +1366,7 @@ html, body {
     display: none;
   }
 
-  nav.active {
-    display: block;
-  }
+ 
 
   nav ul {
     flex-direction: column;
