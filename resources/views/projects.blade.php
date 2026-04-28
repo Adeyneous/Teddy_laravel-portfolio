@@ -7,13 +7,13 @@
 @php
 $projects = [
     [
-        'image'       => 'Neous.png',
-        'name'        => 'Neous HM',
+        'image'       => 'Pi5.png',
+        'name'        => 'Bare-Metal Pi OS',
         'badge'       => 'Coming Soon',
-        'description' => 'Developed using C# and built on the .NET framework, serves as a comprehensive tool designed to streamline hospital operations, managing patient records, scheduling, and departmental workflows.',
-        'tags'        => ['C#', '.NET', 'SQL Server'],
-        'category'    => 'web',
-        'github'      => 'https://github.com/Adeyneous/Neous-HM.git',
+        'description' => 'A bare-metal ARM64 operating system written from scratch for the Raspberry Pi 5. Built up in phases: custom bootloader, microkernel with scheduling and interrupt handling, MMU/paging, GPIO and NIC drivers, an in-kernel TCP/IP stack, and ultimately a minimal Type-1 hypervisor running at EL2.',
+        'tags'        => ['ARM64', 'Assembly', 'C', 'Kernel', 'Pi 5'],
+        'category'    => 'systems',
+        'github'      => 'https://github.com/Adeyneous/pi_os',
         'demo'        => '',
     ],
     [
@@ -74,7 +74,7 @@ $projects = [
     {{-- ── Page header ── --}}
     <div class="proj-header">
         <h1 class="proj-title">Projects</h1>
-        <p class="proj-subtitle">A selection of work spanning web, mobile, data, and machine learning.</p>
+        <p class="proj-subtitle">A selection of work spanning web, mobile, data, machine learning, and low-level systems.</p>
     </div>
 
     {{-- ── Filter tabs ── --}}
@@ -84,6 +84,7 @@ $projects = [
         <button class="proj-filter" data-filter="mobile">Mobile</button>
         <button class="proj-filter" data-filter="data">Data</button>
         <button class="proj-filter" data-filter="ml">ML</button>
+        <button class="proj-filter" data-filter="systems">Systems</button>
     </div>
 
     {{-- ── Project grid ── --}}
