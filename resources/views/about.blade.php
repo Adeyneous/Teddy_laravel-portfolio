@@ -21,21 +21,22 @@
             <h1 class="about-greeting">Hello,<br>I'm Teddy.</h1>
 
             <p class="about-bio">
-                Welcome! I'm a dedicated IT professional specializing in Database Management and Software Development,
-                currently pursuing a Bachelor's degree in Computer Science at Metro State University.
-                My journey began at Hennepin Technical College, where I earned an Associate's degree in
-                SQL Server Software Development — building the solid foundation that launched my career.
+                Welcome! My story starts in Liberia, where I was born and spent the first eleven years of my life
+                before moving to the United States. That early move shaped who I am — it taught me that growth
+                often means stepping into the unfamiliar, and that curiosity is the best companion for any new chapter.
             </p>
             <p class="about-bio">
-                In the tech trenches, I've contributed to numerous projects that showcase my ability to manage
-                complex databases <em>and</em> develop robust software solutions. I take pride in translating
-                intricate data into actionable insights and writing clean, efficient code. My drive for continuous
-                learning pushed me to independently explore React, Node.js, PHP, and TypeScript.
+                Family is at the heart of everything I do. I'm a proud dad of three amazing kids, with another little
+                one on the way. Most of my favorite moments happen right at home — playing, telling stories, or just
+                figuring out the world together. They keep me grounded, and they're the reason I work as hard as I do.
             </p>
             <p class="about-bio">
-                I'm passionate about leveraging technology to solve real-world problems and improve business outcomes.
-                My goal is to join a forward-thinking company where I can contribute to challenging projects and grow
-                as part of a dynamic team — bringing technical prowess, strategic thinking, and a collaborative spirit.
+                When I'm not with my family, you'll usually find me lost in a good book or a great story. I'm drawn
+                to history and philosophy — there's something powerful about understanding where we've been and what
+                shapes the way we think. I'm also a lifelong fantasy fan: <em>The Lord of the Rings</em>, the
+                <em>Inheritance Cycle</em>, and the <em>Wheel of Time</em> series all sit high on my list. That love
+                of stories carries over into my career too — one of my favorite things about computer science is that
+                there's always something new to learn. The journey never really ends, and that's exactly how I like it.
             </p>
 
             <div class="about-facts">
@@ -72,7 +73,7 @@
             <div class="about-edu-card">
                 <div class="about-edu-year">Ongoing</div>
                 <div class="about-edu-degree">Self-Directed Learning</div>
-                <div class="about-edu-school">Machine Learning · Firmware Engineering · PHP · MIPS Assembly · ARM Assembly · Networking</div>
+                <div class="about-edu-school">Machine Learning · Firmware Engineering · MIPS Assembly · ARM Assembly · Networking</div>
             </div>
         </div>
     </div>
