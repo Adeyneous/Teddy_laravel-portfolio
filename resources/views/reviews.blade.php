@@ -27,12 +27,12 @@
             <label for="project-select">Choose a project to review:</label>
             <select id="project-select" name="project" required>
                 <option value="">--Please choose an option--</option>
-                <option value="Neous HM" {{ old('project')=='Neous HM' ? 'selected' : '' }}>Neous HM</option>
-                <option value="ID Info" {{ old('project')=='ID Info' ? 'selected' : '' }}>ID info</option>
-                <option value="Home Credit" {{ old('project')=='Home Credit' ? 'selected' : '' }}>Home Credit</option>
-                <option value="Home Credit Web" {{ old('project')=='Home Credit Web' ? 'selected' : '' }}>Home Credit Web app</option>
-                <option value="Azure Data" {{ old('project')=='Azure Data' ? 'selected' : '' }}>Azure Data</option>
-                <option value="Diet Tracker" {{ old('project')=='Diet Tracker' ? 'selected' : '' }}>Diet Tracker</option>
+                <option value="Bare-Metal Pi OS"        {{ old('project')=='Bare-Metal Pi OS' ? 'selected' : '' }}>Bare-Metal Pi OS</option>
+                <option value="ID Info"                 {{ old('project')=='ID Info' ? 'selected' : '' }}>ID Info</option>
+                <option value="InfraSight"              {{ old('project')=='InfraSight' ? 'selected' : '' }}>InfraSight</option>
+                <option value="Azure Data"              {{ old('project')=='Azure Data' ? 'selected' : '' }}>Azure Data</option>
+                <option value="Diet Tracker"            {{ old('project')=='Diet Tracker' ? 'selected' : '' }}>Diet Tracker</option>
+                <option value="Open Source Contributions" {{ old('project')=='Open Source Contributions' ? 'selected' : '' }}>Open Source Contributions</option>
             </select>
 
             <label for="name">Your Name:</label>

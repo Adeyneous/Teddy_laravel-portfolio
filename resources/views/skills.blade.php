@@ -32,7 +32,7 @@ $skills = [
 /* ── Tech logos ──────────────────────────────────────── */
 $logos = [
     ['image' => 'Azure.svg',      'name' => 'Azure',      'context' => 'Knowledgeable in Microsoft Azure cloud platform for hosting, databases, and enterprise services.'],
-    ['image' => 'MongoDB.svg',    'name' => 'MongoDB',    'context' => 'Used MongoDB for NoSQL document storage in web application projects.'],
+    ['image' => 'mongodb.svg',    'name' => 'MongoDB',    'context' => 'Used MongoDB for NoSQL document storage in web application projects.'],
     ['image' => 'sql.svg',        'name' => 'SQL',        'context' => 'Proficient in SQL for querying, designing schemas, and managing relational databases including SQL Server.'],
     ['image' => 'AWS.svg',        'name' => 'AWS',        'context' => 'Experienced with AWS services including EC2, S3, Lambda, and API Gateway for hosting and serverless architectures.'],
     ['image' => 'bootstrap.svg',  'name' => 'Bootstrap',  'context' => 'Used Bootstrap for rapidly building responsive, mobile-first web layouts.'],

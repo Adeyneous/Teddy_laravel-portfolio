@@ -73,7 +73,7 @@
 
         <div class="contact-info">
             <p><img src="{{ asset('Img/linkedin.svg') }}" alt="LinkedIn" class="icon"> <a href="https://www.linkedin.com/in/adeyneous-kpoto-84021a199/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">LinkedIn</a></p>
-            <p><img src="{{ asset('Img/discord.svg') }}" alt="Discord" class="icon"> <a href="https://discord.gg/643a7TJU" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Discord</a></p>
+            <p><img src="{{ asset('Img/Discord.svg') }}" alt="Discord" class="icon"> <a href="https://discord.gg/643a7TJU" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Discord</a></p>
         </div>
     </div>
 </div>

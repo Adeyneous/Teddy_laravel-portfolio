@@ -19,7 +19,7 @@
     </script>
 
 <header>
-    <div class="title"><?php echo '<span style="color: white">Port</span><span style="color: black">Folio</span>'; ?></div>
+    <div class="title"><?php echo '<span style="color: white">Port</span><span style="color: black">folio</span>'; ?></div>
     <nav style="text-align: center;">
     <ul>
         <li><a href="/index.php?section=home">Home</a></li>

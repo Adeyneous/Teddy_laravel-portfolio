@@ -1619,6 +1619,69 @@ html, body {
 @media (max-width:1024px) { .proj-grid { grid-template-columns:repeat(2,1fr); } }
 @media (max-width:600px)  { .proj-grid { grid-template-columns:1fr; } .proj-img-wrap { height:180px; } }
 
+/* Open Source card — image area */
+.proj-img-oss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1f2937 0%, #0f172a 100%);
+    color: #06b6d4;
+    min-height: 200px;
+}
+.proj-badge-live {
+    background: #10b981;
+    color: #fff;
+}
+
+/* PR list */
+.oss-pr-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 12px 0;
+}
+.oss-pr {
+    display: block;
+    padding: 10px 12px;
+    background: rgba(15, 23, 42, 0.5);
+    border-left: 3px solid #06b6d4;
+    border-radius: 4px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .15s, background .15s;
+}
+.oss-pr:hover {
+    background: rgba(15, 23, 42, 0.8);
+    transform: translateX(2px);
+}
+.oss-pr-merged   { border-left-color: #8b5cf6; }
+.oss-pr-closed   { border-left-color: #ef4444; }
+.oss-pr-open     { border-left-color: #10b981; }
+
+.oss-pr-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: #94a3b8;
+    margin-bottom: 4px;
+}
+.oss-pr-status { font-weight: bold; }
+.oss-pr-repo   { flex: 1; font-family: monospace; }
+.oss-pr-date   { font-size: 0.72rem; }
+.oss-pr-title  {
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    line-height: 1.3;
+}
+
+.oss-loading, .oss-empty {
+    padding: 12px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-style: italic;
+}
 
 /* ============================================================
    SKILLS PAGE

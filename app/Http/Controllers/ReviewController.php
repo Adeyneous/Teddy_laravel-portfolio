@@ -32,7 +32,7 @@ class ReviewController extends Controller
         $recaptchaData = $response->json();
 
         if (!$recaptchaData['success']) {
-            return redirect()->withErrors(['captcha' => 'reCAPTCHA verification failed. Please try again.']);
+            return redirect()->back()->withErrors(['captcha' => 'reCAPTCHA verification failed. Please try again.'])->withInput();
         }
 
         DB::table('project_reviews')->insert([
